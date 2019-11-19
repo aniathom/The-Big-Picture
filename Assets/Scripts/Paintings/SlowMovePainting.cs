@@ -5,13 +5,14 @@ using UnityEngine;
 public class SlowMovePainting : MonoBehaviour {
 
     public PlayerController playerController;
-   public Rigidbody2D playerRB;
+    public GameObject player;
+    public Rigidbody2D playerRB;
     public float pushTime;
     [HideInInspector]
     public float pushTimer;
     public float slowSpeed;
 
-    private float originSpeed; 
+    public float originSpeed; 
     private bool justPushed;
 
 	// Use this for initialization
