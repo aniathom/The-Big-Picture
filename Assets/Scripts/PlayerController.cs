@@ -47,6 +47,8 @@ public class PlayerController : MonoBehaviour {
     //so that we can use the run start up frames
     private bool wasJustIdle;
 
+    public Animator henryAnim;
+
     //Everything for being grounded
     [HideInInspector]
     public bool isGrounded;
@@ -106,6 +108,7 @@ public class PlayerController : MonoBehaviour {
         possessionTimer = possessionTimerOriginal;
         moveAfterLaunchTimer = moveAfterLaunchTime;
         statManager = statObject.GetComponent<PlayerStatManager>();
+        henryAnim = GetComponent<Animator>();
     }
 
 
@@ -167,6 +170,7 @@ public class PlayerController : MonoBehaviour {
         switch (currentState)
         {
             case PlayerStates.Idle:
+                henryAnim.SetTrigger("back");
                 wasJustIdle = true;
                 if (moveInput.x > 0 || moveInput.x < 0)
                 {
@@ -189,6 +193,7 @@ public class PlayerController : MonoBehaviour {
                 break;
             case PlayerStates.Moving:
                 if (moveInput.x < 0.01f && moveInput.x > -0.01f) {
+                henryAnim.SetTrigger("start");
                     currentState = PlayerStates.Idle;
                 }
                 if (Input.GetButtonDown("Jump"))
