@@ -120,6 +120,51 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &9756643
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9756645}
+  - component: {fileID: 9756644}
+  m_Layer: 0
+  m_Name: Stat Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 8418204508859773708, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &9756644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9756643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50e279d6eda3cf242a2baa3b83c63332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minJump: 10
+  maxJump: 15
+--- !u!4 &9756645
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9756643}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.021347016, y: 0.053369448, z: -61.628273}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &120900547
 GameObject:
   m_ObjectHideFlags: 0
@@ -503,14 +548,35 @@ GameObject:
   - component: {fileID: 596054284}
   - component: {fileID: 596054283}
   - component: {fileID: 596054282}
-  - component: {fileID: 596054286}
+  - component: {fileID: 596054281}
   m_Layer: 10
   m_Name: Painting
-  m_TagString: BoostPainting
+  m_TagString: SlowFall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &596054281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 596054280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d424a5347e342934f8e4ce7de51952ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerController: {fileID: 0}
+  playerRB: {fileID: 0}
+  statManager: {fileID: 0}
+  manager: {fileID: 9756643}
+  pushTime: 5
+  pushTimer: 0
+  slowGravity: {x: 0, y: -1}
+  newMin: 8
+  newMax: 5
 --- !u!61 &596054282
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -621,23 +687,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &596054286
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 596054280}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 087da516edaca714abb21d9d0e783ca0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerController: {fileID: 0}
-  playerRB: {fileID: 0}
-  pushTime: 5
-  pushTimer: 0
-  slowSpeed: 2
 --- !u!1 &835007760
 GameObject:
   m_ObjectHideFlags: 0
@@ -4858,16 +4907,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e7617e1aea9b1247823cbc14035519c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  statObject: {fileID: 9756643}
   moveInput: {x: 0, y: 0}
   pushInput: {x: 0, y: 0}
   moveSpeed: 6
   dashSpeed: 10
   accelerationTimeAirborne: 0.05
   moveAfterLaunchTime: 0.2
-  maxJumpVelocity: 15
-  minJumpVelocity: 10
-  jumpCount: 0
-  curJumpCount: 0
+  canDBJump: 0
+  canJump: 0
   canPossess: 1
   coreRB: {fileID: 0}
   isGrounded: 0

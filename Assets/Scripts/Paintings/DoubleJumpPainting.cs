@@ -5,19 +5,22 @@ using UnityEngine;
 public class DoubleJumpPainting : MonoBehaviour {
 
     public PlayerController playerController;
-   public Rigidbody2D playerRB;
+    public Rigidbody2D playerRB;
+
+    private PlayerStatManager statManager;
+    public GameObject manager;
     public float pushTime;
     [HideInInspector]
-    public float pushTimer;
-    private int originJump;
-    public int newJump;
 
+    public float newMaxJump = 20;
+    public float newMinJump = 15;
+    public float pushTimer;
     private bool justPushed;
 
 	// Use this for initialization
 	void Start () {
         pushTimer = pushTime;
-        originJump = playerController.jumpCount;
+        statManager = manager.GetComponent<PlayerStatManager>();
 	}
 	
 	// Update is called once per frame
@@ -32,7 +35,8 @@ public class DoubleJumpPainting : MonoBehaviour {
             else {
                 justPushed = true;
                 pushTimer = pushTime;
-                
+                StartCoroutine(SetJump());
+                RemovePlayerComponents();
 
             }
         }
@@ -45,11 +49,13 @@ public class DoubleJumpPainting : MonoBehaviour {
     }
 
 
-    IEnumerator SetJumpCount(Vector2 tempGravity)
+    IEnumerator SetJump()
     {
-        playerController.curJumpCount = newJump;
+        statManager.maxJump = newMaxJump;
+        statManager.minJump = newMinJump;
         yield return new WaitForSeconds(8);
-        playerController.curJumpCount = originJump;
+        statManager.maxJump = 15;
+        statManager.minJump = 10;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

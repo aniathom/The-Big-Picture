@@ -8,6 +8,10 @@ public class PlayerController : MonoBehaviour {
     //master movement class
     RigidbodyMovement2D Movement;
 
+    public GameObject statObject;
+
+    PlayerStatManager statManager;
+
     //variables for getting input and controlling speed
     [HideInInspector]
     public Vector2 moveInput;
@@ -23,10 +27,10 @@ public class PlayerController : MonoBehaviour {
     private int lastDir;
 
     //variables for variable jump height
-    public float maxJumpVelocity;
-    public float minJumpVelocity;
-    public int jumpCount;
-    public int curJumpCount;
+    private float maxJumpVelocity;
+    private float minJumpVelocity;
+    public bool canDBJump;
+    public bool canJump;
 
     //Boolean to decide if you can possess or not
     [HideInInspector]
@@ -68,6 +72,8 @@ public class PlayerController : MonoBehaviour {
 
     GameObject nonCollideCore;
     BoostPaintingController BoostPaintingController;
+    DoubleJumpPainting DoubleJumpPainting;
+    SlowFallPainting SlowFallPainting;
     SpriteRenderer spriteRenderer;
 
     private bool isBoostPainting;
@@ -82,7 +88,6 @@ public class PlayerController : MonoBehaviour {
         Entering = 4,
         PossessingCollide = 5,
         PossessingNonCollide = 6
-
     }
 
     public PlayerStates currentState;
@@ -99,6 +104,7 @@ public class PlayerController : MonoBehaviour {
         playerScale = transform.localScale;
         possessionTimer = possessionTimerOriginal;
         moveAfterLaunchTimer = moveAfterLaunchTime;
+        statManager = statObject.GetComponent<PlayerStatManager>();
     }
 
 
@@ -112,7 +118,6 @@ public class PlayerController : MonoBehaviour {
                 {
                     //this line literally moves the character by changing its velocity directly
                     rb.velocity = new Vector2(moveInput.x * moveSpeed, rb.velocity.y);
-                    jumpCount = curJumpCount;
                 }
                 else
                 {
@@ -130,6 +135,9 @@ public class PlayerController : MonoBehaviour {
         {
             lastDir = (int)Mathf.Sign(moveInput.x);
         }
+
+        maxJumpVelocity = statManager.maxJump;
+        minJumpVelocity = statManager.minJump;
 
         //checks if you're grounded
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
@@ -186,8 +194,8 @@ public class PlayerController : MonoBehaviour {
             case PlayerStates.JumpingUp:
                 //if you jump it changes your y velocity to the maxJumpVelocity
                 Movement.JumpPlayer(ref rb, isGrounded, maxJumpVelocity);
-                jumpCount--;
                 //if you release jump while your y velocity is above your minJumpVelocity, your velocity gets set to your min jump velocity (variable jump height)
+
                 if (Input.GetButtonUp("Jump"))
                 {
                     Movement.JumpPlayerRelease(ref rb, minJumpVelocity);
@@ -213,7 +221,7 @@ public class PlayerController : MonoBehaviour {
                     }
                     currentState = PlayerStates.Idle;
                 }
-                if (Input.GetButtonDown("Jump") && jumpCount > 0)
+                if (Input.GetButtonDown("Jump"))
                 {
                     wasJustIdle = false;
                     currentState = PlayerStates.JumpingUp;
@@ -230,7 +238,6 @@ public class PlayerController : MonoBehaviour {
                 spriteRenderer.color = Color.clear;
                 if (possessing && Input.GetButtonDown("Jump") || possessionTimer <= 0)
                 {
-                    jumpCount = curJumpCount;
                     possessionTimer = possessionTimerOriginal;
                     RevertParent();
                     if(coreRB.velocity == new Vector2(0, 0)) 
@@ -251,7 +258,7 @@ public class PlayerController : MonoBehaviour {
                     {
                     pushInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
                     isCancelledPressed = Input.GetButtonDown("Jump");
-                        if (BoostPaintingController.pushTimer <= 0 || isCancelledPressed)
+                        if (isCancelledPressed)
                         {
                             possessionTimer = possessionTimerOriginal;
                             RevertParent();
@@ -310,7 +317,7 @@ public class PlayerController : MonoBehaviour {
 
             if (collision.gameObject.layer == 10) 
             {
-                if(collision.gameObject.tag == "BoostPainting") {
+                if(collision.gameObject.tag == "SlowFall") {
                     //stopping the player so that they don't start possessing with an initial velocity
                     rb.velocity = new Vector2(0, 0);
                     isBoostPainting = true;
@@ -318,7 +325,20 @@ public class PlayerController : MonoBehaviour {
                     entering = false;
                     canEnter = true;
                     coreRB = collision.gameObject.GetComponent<Rigidbody2D>();
-                    BoostPaintingController = collision.gameObject.GetComponent<BoostPaintingController>();
+                    SlowFallPainting = collision.gameObject.GetComponent<SlowFallPainting>();
+                    nonCollideCore = collision.gameObject;
+                    NonCollideChangeParent(nonCollideCore);
+                    currentState = PlayerStates.PossessingNonCollide;
+                }
+                else if (collision.gameObject.tag == "DoubleJump")
+                {
+                    rb.velocity = new Vector2(0, 0);
+                    isBoostPainting = true;
+                    possessing = true;
+                    entering = false;
+                    canEnter = true;
+                    coreRB = collision.gameObject.GetComponent<Rigidbody2D>();
+                    DoubleJumpPainting = collision.gameObject.GetComponent<DoubleJumpPainting>();
                     nonCollideCore = collision.gameObject;
                     NonCollideChangeParent(nonCollideCore);
                     currentState = PlayerStates.PossessingNonCollide;
@@ -335,14 +355,26 @@ public class PlayerController : MonoBehaviour {
             Debug.Log("Input Registered.");
             if (collision.gameObject.layer == 10) 
             {
-                if(collision.gameObject.tag == "BoostPainting") {
+                if(collision.gameObject.tag == "SlowFall") {
                     //stopping the player so that they don't start possessing with an initial velocity
                     rb.velocity = new Vector2(0, 0);
                     isBoostPainting = true;
                     possessing = true;
                     entering = false;
                     coreRB = collision.gameObject.GetComponent<Rigidbody2D>();
-                    BoostPaintingController = collision.gameObject.GetComponent<BoostPaintingController>();
+                    SlowFallPainting = collision.gameObject.GetComponent<SlowFallPainting>();
+                    nonCollideCore = collision.gameObject;
+                    NonCollideChangeParent(nonCollideCore);
+                    currentState = PlayerStates.PossessingNonCollide;
+                }
+                else if (collision.gameObject.tag == "DoubleJump")
+                {
+                    rb.velocity = new Vector2(0, 0);
+                    isBoostPainting = true;
+                    possessing = true;
+                    entering = false; 
+                    coreRB = collision.gameObject.GetComponent<Rigidbody2D>();
+                    DoubleJumpPainting = collision.gameObject.GetComponent<DoubleJumpPainting>();
                     nonCollideCore = collision.gameObject;
                     NonCollideChangeParent(nonCollideCore);
                     currentState = PlayerStates.PossessingNonCollide;
