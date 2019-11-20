@@ -54,6 +54,8 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\DropPlat.cs" />
+     <Compile Include="Assets\ExitCode.cs" />
+     <Compile Include="Assets\Fonts\Script\scriptTexttest.cs" />
      <Compile Include="Assets\Henry.cs" />
      <Compile Include="Assets\Scripts\EndLevel.cs" />
      <Compile Include="Assets\Scripts\KillPlayer.cs" />
@@ -66,6 +68,8 @@
      <Compile Include="Assets\Scripts\PlayerController.cs" />
      <Compile Include="Assets\Scripts\PlayerStatManager.cs" />
      <Compile Include="Assets\Scripts\RigidbodyMovement2D.cs" />
+     <None Include="Assets\Fonts\Documentation\JazzCreateBubble_VersionHistory_1.1.txt" />
+     <None Include="Assets\Fonts\Documentation\JazzCreateAltKeys_BubbleFont.txt" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>C:/Users/yoonl/Documents/GitHub/The-Big-Picture/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>
