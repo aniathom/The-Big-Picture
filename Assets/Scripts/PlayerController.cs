@@ -351,9 +351,6 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-
-
-
     //flips the player around so we don't have to make more animations
     void Flip()
     {

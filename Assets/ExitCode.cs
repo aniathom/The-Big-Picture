@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class KillPlayer : MonoBehaviour
+public class ExitCode : MonoBehaviour
 {
 
     public PlayerController player;
@@ -24,12 +24,11 @@ public class KillPlayer : MonoBehaviour
     {
         if (target.gameObject.layer == 9)
         {
-            Debug.Log("Dead.");
+            Debug.Log("Henry exits.");
             StartCoroutine(ResetLevel());
         }
     }
-
-    IEnumerator ResetLevel()
+    public IEnumerator ResetLevel()
     {
         player.enabled = false;
         //play death animation
