@@ -72,6 +72,7 @@ public class PlayerController : MonoBehaviour {
 
     private bool isBoostPainting;
     private bool canEnter;
+    Animator animator;
 
     public enum PlayerStates
     {
@@ -125,6 +126,12 @@ public class PlayerController : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        /*
+        if (moveInput.x == 0)
+        {
+            animator.Play("Idle");
+        }
+        */
         if(moveInput.x != 0)
         {
             lastDir = (int)Mathf.Sign(moveInput.x);
@@ -159,6 +166,7 @@ public class PlayerController : MonoBehaviour {
                 }
                 if (Input.GetButton("Jump")) 
                 {
+          
                     currentState = PlayerStates.JumpingUp;
                 }
                 if (Input.GetButtonDown("Enter") && canPossess)

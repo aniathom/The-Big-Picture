@@ -367,11 +367,11 @@ MonoBehaviour:
   moveInput: {x: 0, y: 0}
   pushInput: {x: 0, y: 0}
   moveSpeed: 4
-  dashSpeed: 10
+  dashSpeed: 8
   accelerationTimeAirborne: 0.05
   moveAfterLaunchTime: 0.2
-  maxJumpVelocity: 15
-  minJumpVelocity: 10
+  maxJumpVelocity: 12
+  minJumpVelocity: 8
   jumpCount: 0
   curJumpCount: 0
   canPossess: 1

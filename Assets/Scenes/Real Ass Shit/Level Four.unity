@@ -474,7 +474,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 219154939}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.78, y: -4.25, z: 0}
+  m_LocalPosition: {x: 1.84, y: -4.22, z: 0}
   m_LocalScale: {x: 0.289201, y: 0.257278, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -610,7 +610,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.20608997, y: -0.0000019073486}
+  m_Offset: {x: 0.005348921, y: -0.047925472}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -621,7 +621,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 12.847359, y: 6.3859787}
+  m_Size: {x: 10.040979, y: 5.267765}
   m_EdgeRadius: 0
 --- !u!50 &618638477
 Rigidbody2D:
@@ -701,7 +701,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 618638475}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.68, y: -3.61, z: 0}
+  m_LocalPosition: {x: 1.92, y: -3.5, z: 0}
   m_LocalScale: {x: 0.12901336, y: 0.15523928, z: 1}
   m_Children:
   - {fileID: 1852431840}
@@ -1169,11 +1169,11 @@ MonoBehaviour:
   moveInput: {x: 0, y: 0}
   pushInput: {x: 0, y: 0}
   moveSpeed: 4
-  dashSpeed: 10
+  dashSpeed: 8
   accelerationTimeAirborne: 0.05
   moveAfterLaunchTime: 0.2
-  maxJumpVelocity: 15
-  minJumpVelocity: 10
+  maxJumpVelocity: 12
+  minJumpVelocity: 8
   jumpCount: 0
   curJumpCount: 0
   canPossess: 1
