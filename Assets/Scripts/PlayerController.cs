@@ -103,8 +103,7 @@ public class PlayerController : MonoBehaviour {
 
 
     private void FixedUpdate()
-    {
-
+    { 
             if (currentState == PlayerStates.Idle || currentState == PlayerStates.Moving || currentState == PlayerStates.JumpingUp || currentState == PlayerStates.Falling)
             {
 
@@ -129,6 +128,13 @@ public class PlayerController : MonoBehaviour {
         if(moveInput.x != 0)
         {
             lastDir = (int)Mathf.Sign(moveInput.x);
+            if (moveInput.x < 0)
+            {
+                spriteRenderer.flipX = true;
+            } else if (moveInput.x > 0)
+            {
+                spriteRenderer.flipX = false;
+            }
         }
 
         //checks if you're grounded
@@ -350,8 +356,9 @@ public class PlayerController : MonoBehaviour {
             }
         }
     }
-
+    
     //flips the player around so we don't have to make more animations
+    /*
     void Flip()
     {
         facingRight = !facingRight;
@@ -361,4 +368,5 @@ public class PlayerController : MonoBehaviour {
         playerScale.x = -playerScale.x;
 
     }
+    */
 }
