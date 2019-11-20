@@ -5,7 +5,11 @@ using UnityEngine;
 public class SlowFallPainting : MonoBehaviour {
 
     public PlayerController playerController;
-   public Rigidbody2D playerRB;
+    public Rigidbody2D playerRB;
+
+    public PlayerStatManager statManager;
+
+    public GameObject manager;
     public float pushTime;
     [HideInInspector]
     public float pushTimer;
@@ -14,10 +18,16 @@ public class SlowFallPainting : MonoBehaviour {
     private Vector2 baseGravity;
     private bool justPushed;
 
+    [SerializeField]
+    private float newMin = 8;
+    [SerializeField]
+    private float newMax = 5;
+
 	// Use this for initialization
 	void Start () {
         pushTimer = pushTime;
         baseGravity = Physics2D.gravity;
+        statManager = manager.GetComponent<PlayerStatManager>();
 	}
 	
 	// Update is called once per frame
@@ -48,8 +58,12 @@ public class SlowFallPainting : MonoBehaviour {
     IEnumerator SetGravity(Vector2 tempGravity)
     {
         Physics2D.gravity = tempGravity; 
+        statManager.maxJump = newMax;
+        statManager.minJump = newMin;
         yield return new WaitForSeconds(8);
         Physics2D.gravity  = baseGravity;
+        statManager.maxJump = 15;
+        statManager.minJump = 10;
     }
 
 

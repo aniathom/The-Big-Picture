@@ -17,7 +17,7 @@ public class DropPlat : MonoBehaviour
     {
         if (col.gameObject.name.Equals ("Henry"))
         {
-            Invoke("DropPlatform", 1.2f);
+            Invoke("DropPlatform", .5f);
             Destroy(gameObject, 2f);
         }
     }

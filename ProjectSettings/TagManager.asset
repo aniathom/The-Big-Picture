@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - BoostPainting
+  - Doublejump
+  - SlowFall
   layers:
   - Default
   - TransparentFX
