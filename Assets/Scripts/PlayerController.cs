@@ -88,9 +88,7 @@ public class PlayerController : MonoBehaviour {
         Moving = 1,
         JumpingUp = 2,
         Falling = 3,
-        Entering = 4,
-        PossessingCollide = 5,
-        PossessingNonCollide = 6
+        Entering = 4
     }
 
     public PlayerStates currentState;
@@ -184,7 +182,6 @@ public class PlayerController : MonoBehaviour {
                 if (Input.GetButtonDown("Enter") && canPossess)
                 {
                     entering = true;
-                    canPossess = false;
                 }
                 if (!isGrounded)
                 {
@@ -201,13 +198,6 @@ public class PlayerController : MonoBehaviour {
                     wasJustIdle = false;
                     currentState = PlayerStates.JumpingUp;
                 }
-
-                if (Input.GetButtonDown("Enter") && canPossess)
-                {
-                    entering = true;
-                    canPossess = false;
-                    wasJustIdle = false;
-                }
                 wasJustIdle = false;
                 break;
             case PlayerStates.JumpingUp:
@@ -220,13 +210,6 @@ public class PlayerController : MonoBehaviour {
                     Movement.JumpPlayerRelease(ref rb, minJumpVelocity);
                     currentState = PlayerStates.Falling;
                 }
-
-                if (Input.GetButtonDown("Enter") && canPossess)
-                {
-                    entering = true;
-                    canPossess = false;
-                }
-
                 if (rb.velocity.y <= 0) {
                     currentState = PlayerStates.Falling;
                 }
@@ -245,88 +228,13 @@ public class PlayerController : MonoBehaviour {
                     wasJustIdle = false;
                     currentState = PlayerStates.JumpingUp;
                 }
-                if (Input.GetButtonDown("Enter") && canPossess)
-                {
-                    entering = true;
-                    canPossess = false;
-                }
 
                 break;
 
-            case PlayerStates.PossessingCollide:
-                spriteRenderer.color = Color.clear;
-                if (possessing && Input.GetButtonDown("Jump") || possessionTimer <= 0)
-                {
-                    possessionTimer = possessionTimerOriginal;
-                    RevertParent();
-                    if(coreRB.velocity == new Vector2(0, 0)) 
-                    {
-                        canPossess = true;
-                        isGrounded = true;
-                        Movement.JumpPlayer(ref rb, isGrounded, maxJumpVelocity);
-                        spriteRenderer.color = Color.white;
-                        currentState = PlayerStates.JumpingUp;
-                    }
-                }
-
-                possessionTimer -= Time.deltaTime;
-                break;
-            case PlayerStates.PossessingNonCollide:
-                spriteRenderer.color = Color.clear;
-                    if (possessing && Input.GetButtonDown("Jump") || possessionTimer <= 0)
-                    {
-                    pushInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-                    isCancelledPressed = Input.GetButtonDown("Jump");
-                        if (isCancelledPressed)
-                        {
-                            possessionTimer = possessionTimerOriginal;
-                            RevertParent();
-                            canPossess = true; 
-                            spriteRenderer.color = Color.white;
-                            currentState = PlayerStates.Falling;
-                        }
-                    }
-                
-
-                possessionTimer -= Time.deltaTime;
-                break;
-        }
-
-	}
-
-
-    //Changes the player's parent to whatever it's trying to possess
-    void ChangeParent(Rigidbody2D core)
-    {
-        boxCollider.enabled = false;
-        rb.isKinematic = true;
-        transform.parent = core.transform;
-        transform.position = core.transform.position;
-    }
-
-    void NonCollideChangeParent(GameObject core)
-    {
-        boxCollider.enabled = false;
-        rb.isKinematic = true;
-        transform.parent = core.transform;
-        transform.position = core.transform.position;
-    }
-
-    //Revert the parent of object 2.
-    void RevertParent()
-    {
-        possessing = false;
-        transform.parent = null;
-        rb.isKinematic = false;
-        boxCollider.enabled = true;
-        transform.localScale = playerScale;
-        transform.rotation = Quaternion.Euler(0,0,0);
+    	}
 
     }
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        transform.parent = null;
-    }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -340,67 +248,23 @@ public class PlayerController : MonoBehaviour {
                     //stopping the player so that they don't start possessing with an initial velocity
                     rb.velocity = new Vector2(0, 0);
                     isBoostPainting = true;
-                    possessing = true;
-                    entering = false;
-                    canEnter = true;
                     coreRB = collision.gameObject.GetComponent<Rigidbody2D>();
                     SlowFallPainting = collision.gameObject.GetComponent<SlowFallPainting>();
                     nonCollideCore = collision.gameObject;
-                    NonCollideChangeParent(nonCollideCore);
-                    currentState = PlayerStates.PossessingNonCollide;
                 }
                 else if (collision.gameObject.tag == "DoubleJump")
                 {
                     rb.velocity = new Vector2(0, 0);
                     isBoostPainting = true;
-                    possessing = true;
-                    entering = false;
-                    canEnter = true;
                     coreRB = collision.gameObject.GetComponent<Rigidbody2D>();
                     DoubleJumpPainting = collision.gameObject.GetComponent<DoubleJumpPainting>();
                     nonCollideCore = collision.gameObject;
-                    NonCollideChangeParent(nonCollideCore);
-                    currentState = PlayerStates.PossessingNonCollide;
                 }
 
             }
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (entering)
-        {
-            Debug.Log("Input Registered.");
-            if (collision.gameObject.layer == 10) 
-            {
-                if(collision.gameObject.tag == "SlowFall") {
-                    //stopping the player so that they don't start possessing with an initial velocity
-                    rb.velocity = new Vector2(0, 0);
-                    isBoostPainting = true;
-                    possessing = true;
-                    entering = false;
-                    coreRB = collision.gameObject.GetComponent<Rigidbody2D>();
-                    SlowFallPainting = collision.gameObject.GetComponent<SlowFallPainting>();
-                    nonCollideCore = collision.gameObject;
-                    NonCollideChangeParent(nonCollideCore);
-                    currentState = PlayerStates.PossessingNonCollide;
-                }
-                else if (collision.gameObject.tag == "DoubleJump")
-                {
-                    rb.velocity = new Vector2(0, 0);
-                    isBoostPainting = true;
-                    possessing = true;
-                    entering = false; 
-                    coreRB = collision.gameObject.GetComponent<Rigidbody2D>();
-                    DoubleJumpPainting = collision.gameObject.GetComponent<DoubleJumpPainting>();
-                    nonCollideCore = collision.gameObject;
-                    NonCollideChangeParent(nonCollideCore);
-                    currentState = PlayerStates.PossessingNonCollide;
-                }
-            }
-        }
-    }
     
     //flips the player around so we don't have to make more animations
     /*
