@@ -294,6 +294,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1637297162}
+  manager: {fileID: 662119606}
+  statManager: {fileID: 0}
   levelName: Level Four
 --- !u!61 &556375831
 BoxCollider2D:
@@ -1409,6 +1411,7 @@ MonoBehaviour:
   canJump: 0
   canPossess: 1
   coreRB: {fileID: 0}
+  henryAnim: {fileID: 0}
   isGrounded: 0
   checkRadius: 0.1
   whatIsGround:

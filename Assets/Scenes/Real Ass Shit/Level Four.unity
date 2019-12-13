@@ -753,6 +753,40 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &667148544
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 667148545}
+  - component: {fileID: 1807509348}
+  - component: {fileID: 1807509349}
+  - component: {fileID: 1807509351}
+  - component: {fileID: 1807509350}
+  m_Layer: 0
+  m_Name: Barrier
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &667148545
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 667148544}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &832087363
 GameObject:
   m_ObjectHideFlags: 0
@@ -860,6 +894,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5.8118253, y: 1.407022}
   m_EdgeRadius: 0
+--- !u!1 &875296052
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1807509352}
+  m_Layer: 0
+  m_Name: Recovery GameObject (1807509352)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &942207814
 GameObject:
   m_ObjectHideFlags: 0
@@ -1222,6 +1272,7 @@ MonoBehaviour:
   canJump: 0
   canPossess: 1
   coreRB: {fileID: 0}
+  henryAnim: {fileID: 0}
   isGrounded: 0
   checkRadius: 0.1
   whatIsGround:
@@ -1480,26 +1531,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1807509347
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1807509352}
-  - component: {fileID: 1807509351}
-  - component: {fileID: 1807509350}
-  - component: {fileID: 1807509349}
-  - component: {fileID: 1807509348}
-  m_Layer: 8
-  m_Name: cracked (3)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!50 &1807509348
 Rigidbody2D:
   serializedVersion: 4
@@ -1507,7 +1538,7 @@ Rigidbody2D:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1807509347}
+  m_GameObject: {fileID: 667148544}
   m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
@@ -1527,7 +1558,7 @@ BoxCollider2D:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1807509347}
+  m_GameObject: {fileID: 667148544}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -1553,7 +1584,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1807509347}
+  m_GameObject: {fileID: 667148544}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d8ea40d3ac1a14836b19bb1a3d4e6604, type: 3}
@@ -1565,7 +1596,7 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1807509347}
+  m_GameObject: {fileID: 667148544}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -1614,7 +1645,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1807509347}
+  m_GameObject: {fileID: 875296052}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.91, y: 2.28, z: 0}
   m_LocalScale: {x: 0.17152469, y: 0.19975123, z: 1}
@@ -1809,6 +1840,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1261366672}
+  manager: {fileID: 392594927}
+  statManager: {fileID: 0}
   levelName: TBC
 --- !u!61 &1852431842
 BoxCollider2D:

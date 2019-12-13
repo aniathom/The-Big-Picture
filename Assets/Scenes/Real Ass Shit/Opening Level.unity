@@ -707,6 +707,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 626900192}
+  manager: {fileID: 1103912023}
+  statManager: {fileID: 0}
   levelName: Level Two
 --- !u!61 &591414777
 BoxCollider2D:
@@ -877,7 +879,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e7617e1aea9b1247823cbc14035519c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  statObject: {fileID: 1103912023}
+  statObject: {fileID: 0}
   moveInput: {x: 0, y: 0}
   pushInput: {x: 0, y: 0}
   moveSpeed: 4
@@ -888,6 +890,7 @@ MonoBehaviour:
   canJump: 0
   canPossess: 1
   coreRB: {fileID: 0}
+  henryAnim: {fileID: 0}
   isGrounded: 0
   checkRadius: 0.1
   whatIsGround:
